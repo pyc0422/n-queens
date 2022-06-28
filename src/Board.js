@@ -126,6 +126,7 @@
       */
       var count = 0;
       for (var i = 0; i < this.get('n'); i++) {
+        console.log('this.n: ', this.get('n'));
         if (this.get(i)[colIndex] === 1) {
           count ++;
         }
@@ -156,53 +157,38 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var n = this.get('n');
       var count = 0;
-      if (majorDiagonalColumnIndexAtFirstRow === n - 1) {
-        return false;
-      }
-      var find = false;
-      var rowIndex;
-      //loop all the row with the colIndex
       for (var i = 0; i < n; i++) {
-        var cur = this.get(i)[majorDiagonalColumnIndexAtFirstRow];
-        if (cur === 1) {
-          rowIndex = i;
-          find = true;
-          break;
+        if (this.get(i)[majorDiagonalColumnIndexAtFirstRow] === 1) {
+          count++;
         }
+        majorDiagonalColumnIndexAtFirstRow++;
       }
-      /*
-      [[1,0,1],
-       [0,0,1],
-       [1,1,1]]
-       rowIndex = 0;colIndex = 0;
-       nextRow =rowIndex + 1 = 1
-       nextCol = colIndex + 1;
-      */
-      if (!find) {
-        return false;
-      }
-      if (i === n - 1) {
-        return false;
-      }
-      //for loop rest row to find the diagonal element;
-      var nextColIndex = majorDiagonalColumnIndexAtFirstRow + 1;
-      for (var j = rowIndex + 1; j < n; j++) {
-        if (nextColIndex < n && this.get(j)[nextColIndex] === 1) {
-          count ++;
-        } else {
-          nextColIndex ++;
-        }
-      }
-      if (count > 0) {
+      if (count > 1) {
         return true;
       }
-      // if the diagonal element === 1 = > count ++;
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       //pass each columIndex to test if it return conflict
+      /*INDEX
+       0 1 2 3
+      -1 0 1 2
+      -2-1 0 1
+      -3-2-1 0
+
+      [[1,0,0,0],
+       [1,0,0,0],
+       [0,1,0 0],
+       [0,1,0,0]]
+      */
+      var n = this.get('n');
+      for (var i = 0; i > -n; i--) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
