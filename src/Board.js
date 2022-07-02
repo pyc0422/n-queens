@@ -169,12 +169,23 @@
 
     // test if any major diagonals on this board contain conflicts
 
+    // hasAnyMajorDiagonalConflicts: function() {
+    //   //pass each columIndex to test if it return conflict
+
+    //   var n = this.get('n');
+    //   for (var i = 0; i > -n; i--) {
+    //     if (this.hasMajorDiagonalConflictAt(i)) {
+    //       return true;
+    //     }
+    //   }
+    //   return false;
+    // },
     hasAnyMajorDiagonalConflicts: function() {
       //pass each columIndex to test if it return conflict
 
       var n = this.get('n');
-      for (var i = 0; i > -n; i--) {
-        if (this.hasMajorDiagonalConflictAt(i)) {
+      for (var i = 0; i < n; i++) {
+        if (this.hasMajorDiagonalConflictAt(i) || this.hasMajorDiagonalConflictAt(-i)) {
           return true;
         }
       }
@@ -228,6 +239,7 @@
        [0,1,0,0]]
       */
       var n = this.get('n');
+      console.log('n: ', n);
       for (var i = 1; i < (n - 1) * 2; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
@@ -235,7 +247,6 @@
       }
       return false;
     }
-
     /*--------------------  End of Helper Functions  ---------------------*/
   });
 

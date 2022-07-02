@@ -414,85 +414,79 @@ window.findNQueensSolution = function(n) {
 
 
 window.countNQueensSolutions = function(n) {
-
-  // //edgecase- if n equals 2 or 3 return empty board
   // if (n === 0) {
   //   return 1;
   // }
-  // if (n === 2 || n === 3) {
-  //   return 0;
-  // }
-  // debugger;
+  if (n === 2 || n === 3) {
+    return 0;
+  }
   // //create a new board class
-  // var board = new Board({n: n});
-  // //create a solution var
-  // var solution = 0;
-  // //creat inner recursive helper (input is  number (index of row))
-  // var innerFunc = function(rowIndex) {
-  //   //console.log('RowINdex: ', rowIndex);
-  //   //base case if row(it is a index) equals n
-  //   if (rowIndex === n) {
-  //     //increment the solutions var
-  //     solution++;
-  //     //use return statement to stop everything
-  //     return;
-  //   }
-  //   //iterate less than n times (for in loop)
-  //   for (var i = 0; i < n; i++) {
-  //     //board toggle new piece place at (row , i)
-  //     board.togglePiece(rowIndex, i);
-  //     //check the board if there are any conflicts (board.hasAnyQueensConflict)
-  //     console.log('hasConflicts: ', board.hasAnyQueensConflicts());
-  //     if (!board.hasAnyQueensConflicts()) {
-  //       //if no conflicts call helper func recurively with n + 1
-  //       var next = rowIndex + 1;
-  //       innerFunc(next);
-  //     } else {
-  //       board.togglePiece(rowIndex, i);
-  //     }
-
-
-
-      //if there are conflicts remove (toggle piece) board.toggle(row, i)
-
-
-  //   }
-
-  // };
-  // //invoke helper with zero the first time
-  // innerFunc(0);
-  // //return solution
-  //  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  // return solution;
-  var count = 0;
-  var queensIndex = new Array(n).fill(-1);
+  var board = new Board({n: n});
+  //create a solution var not assigned
+  // var sols = 0;
+  var solution = 0;
   // debugger;
-  var dfs = function(queensIndex, row, board) {
-    if (row === n) {
-      count ++;
+  //creat inner recursive helper (input is  number (index of row))
+  var innerFunc = function(rowIndex) {
+    //base case if row(it is a index) equals n
+    if (rowIndex === n) {
+      //set solution equal to stringify version of board rows invoked
+
+      solution++;
+      //use return statement to stop everything
       return;
     }
+    //iterate less than n times (for in loop)
     for (var i = 0; i < n; i++) {
-      queensIndex[row] = i;
-      if (isValid(queensIndex, row)) {
-        var temp = new Array(n).fill(0);
-        temp.splice(i, 1, 1);
-        board[row] = temp;
-        dfs(queensIndex, row + 1, board);
+      //board toggle new piece place at (row , i)
+      board.togglePiece(rowIndex, i);
+      //check the board if there are any conflicts (board.hasAnyQueensConflict)
+      if (!board.hasAnyQueensConflicts()) {
+        //if no conflicts call helper func recurively with n + 1
+        innerFunc(rowIndex + 1);
+        // if (solution !== undefined) {
+        //   return solution;
+        // }
       }
+      //if there are conflicts remove (toggle piece) board.toggle(row, i)
+      board.togglePiece(rowIndex, i);
     }
   };
-  var isValid = function(queensIndex, row) {
-    for (var row2 = 0; row2 < row; row2++) {
-      if (Math.abs(queensIndex[row2] - queensIndex[row]) === row - row2 || queensIndex[row2] === queensIndex[row]) {
-        return false;
-      }
-    }
-    return true;
-  };
-  dfs(queensIndex, 0, []);
-  console.log('Number of solutions for ' + n + ' queens:', count);
-  return count;
+  //invoke helper with zero the first time
+  innerFunc(0);
+  //return solution
+  // console.log(sols);ß
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  return solution;
+  // var count = 0;
+  // var queensIndex = new Array(n).fill(-1);
+  // // debugger;
+  // var dfs = function(queensIndex, row, board) {
+  //   if (row === n) {
+  //     count ++;
+  //     return;
+  //   }
+  //   for (var i = 0; i < n; i++) {
+  //     queensIndex[row] = i;
+  //     if (isValid(queensIndex, row)) {
+  //       var temp = new Array(n).fill(0);
+  //       temp.splice(i, 1, 1);
+  //       board[row] = temp;
+  //       dfs(queensIndex, row + 1, board);
+  //     }
+  //   }
+  // };
+  // var isValid = function(queensIndex, row) {
+  //   for (var row2 = 0; row2 < row; row2++) {
+  //     if (Math.abs(queensIndex[row2] - queensIndex[row]) === row - row2 || queensIndex[row2] === queensIndex[row]) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // };
+  // dfs(queensIndex, 0, []);
+  // console.log('Number of solutions for ' + n + ' queens:', count);
+  // return count;
 
 };
 
