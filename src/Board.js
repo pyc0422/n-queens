@@ -61,7 +61,6 @@
       );
     },
 
-
 /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
@@ -169,6 +168,7 @@
     },
 
     // test if any major diagonals on this board contain conflicts
+
     hasAnyMajorDiagonalConflicts: function() {
       //pass each columIndex to test if it return conflict
 
@@ -195,9 +195,9 @@
         if (this.get(i)[minorDiagonalColumnIndexAtFirstRow] === 1) {
           count++;
         }
-        if (minorDiagonalColumnIndexAtFirstRow < 0) {
-          continue;
-        }
+        // if (minorDiagonalColumnIndexAtFirstRow < 0) {
+        //   continue;
+        // }
         minorDiagonalColumnIndexAtFirstRow--;
 
       }
